@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-function Login() {
+function Login({ handleLogin }) {
   const loginSchema = yup.object().shape({
     email: yup
       .string()
@@ -11,7 +11,7 @@ function Login() {
       .required("Email is required"),
     password: yup
       .string()
-      .min(6, "Password must be at least 6 characters")
+      .min(3, "Password must be at least 3 characters")
       .required("Password is required"),
   });
   const {
@@ -24,7 +24,10 @@ function Login() {
   });
 
   const onSubmit = (data) => {
-    console.log("Data", data);
+    const { email, password } = data;
+    // console.log(email, password);
+    handleLogin(email, password);
+
     reset();
   };
   return (
